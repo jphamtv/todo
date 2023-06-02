@@ -1,0 +1,16 @@
+<!-- templates/task_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="task-entry">
+  <h2>{{ object.title }}</h2>
+  <p>{{ object.description }}</p>
+  <p>{{ object.due_date }}</p>
+</div>
+<div>
+  <p><a href="{% url 'task_edit' task.pk %}">Edit</a>
+    <a href="{% url 'task_delete' task.pk %}">Delete</a>
+  </p>
+  <p>Back to <a href="{% url 'task_list' %}">Task List</a>.</p>
+</div>
+{% endblock content %}
