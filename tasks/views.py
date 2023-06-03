@@ -1,4 +1,5 @@
 # tasks/views.py
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
@@ -6,17 +7,24 @@ from django.urls import reverse_lazy
 from .models import Task
 
 
-class TaskListView(ListView):
+class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task_list.html"
 
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
 
-class TaskDetailView(DetailView):
+
+class TaskDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Task
     template_name = "task_detail.html"
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
 
-class TaskUpdateView(UpdateView):
+
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
     fields = [
         "title",
@@ -25,14 +33,22 @@ class TaskUpdateView(UpdateView):
     ]
     template_name = "task_edit.html"
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
 
-class TaskDeleteView(DeleteView):
+
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
     template_name = "task_delete.html"
     success_url = reverse_lazy("task_list")
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
 
-class TaskCreateView(CreateView):
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = "task_new.html"
     fields = (
@@ -40,3 +56,7 @@ class TaskCreateView(CreateView):
         "description",
         "due_date",
     )
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
