@@ -11,8 +11,9 @@
 <p><a class="btn btn-primary btn-lg" href="{% url 'task_list' %}" role="button">View your tasks</a></p>
 <!-- Customer is logged out or not registered yet -->
 {% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a> |
-<a href="{% url 'signup' %}">Sign Up</a>
+<p>Log in or sign up</p>
+<a href="{% url 'login' %}" class="btn btn-outline-primary me-2">
+    Log In</a>
+  <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
 {% endif %}
 {% endblock content %}
