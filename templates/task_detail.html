@@ -6,7 +6,7 @@
 <div class="task-entry">
   <h2>{{ object.title }}</h2>
   <p>{{ object.description }}</p>
-  <p>{{ object.due_date }}</p>
+  <p>Due on {{ object.due_date }}</p>
 </div>
 <div>
   <p><a href="{% url 'task_edit' task.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
