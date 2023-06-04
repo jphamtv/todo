@@ -1,4 +1,5 @@
 <!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,8 +19,8 @@
       <a class="navbar-brand mb-0 h1" href="{% url 'home' %}">Todo App</a>
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center
               mb-md-0">
-      <!-- Customer is logged in -->
-      {% if user.is_authenticated %}
+        <!-- Customer is logged in -->
+        {% if user.is_authenticated %}
       </ul>
       <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
