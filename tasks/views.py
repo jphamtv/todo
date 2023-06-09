@@ -11,6 +11,7 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = "task_list.html"
 
+    # Display logged in user's content only
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
 
@@ -18,7 +19,7 @@ class TaskListView(LoginRequiredMixin, ListView):
 class TaskDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Task
     template_name = "task_detail.html"
-
+    
     def test_func(self):
         obj = self.get_object()
         return obj.user == self.request.user
