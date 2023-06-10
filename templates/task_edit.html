@@ -11,4 +11,12 @@
     <button class="btn btn-primary ml-4" type="submit">Update</button>
   </div>
 </form>
+
+<script>
+  $(document).ready(function(){
+      $('#id_due_date').datepicker({
+          format: 'yyyy-mm-dd'
+      });
+  });
+  </script>
 {% endblock content %}
